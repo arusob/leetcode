@@ -1,8 +1,5 @@
-// https://leetcode.com/problems/best-time-to-buy-and-sell-stock-iii/
 
-var prices = [8, 9, 7, 6, 4, 6, 4, 5, 6, 7, 8, 3, 2, 0, 1];
-
-function makeArrayPossibleTrades() {
+function makeArrayPossibleTrades(prices) {
   let tradeOne = 0;
   let minArray = [];
   let minIndexArray = [];
@@ -10,6 +7,7 @@ function makeArrayPossibleTrades() {
   let maxIndexArray = [];
   let arrDiff = [];
   let objArray = [];
+
   for (let i = 0; i <= prices.length - 1; i++) {
     const getMax = prices[i];
     if (i > 0) {
@@ -34,23 +32,23 @@ function makeArrayPossibleTrades() {
       }
     }
   }
-  return objArray;
+  var possibleTrades = objArray
+  if(objArray.length === 0) {
+	var lastTrade = 0;
+	return 0;
+  } else {
+	var lastTrade = possibleTrades[possibleTrades.length - 1];
+	var firstLargestTransaction = possibleTrades[possibleTrades.length - 1].profit;
+	let restOfTrades = possibleTrades.filter((obj) => obj.iMax < lastTrade.iMin);
+	let secondLargestTransaction = 0;
+	restOfTrades.forEach((obj) => {
+	  if (obj.profit > secondLargestTransaction) {
+		secondLargestTransaction = obj.profit;
+	  }
+	});
+	output = firstLargestTransaction + secondLargestTransaction;
+	return output
+  }
 }
 
-var possibleTrades = makeArrayPossibleTrades(prices);
-var lastTrade = possibleTrades[possibleTrades.length - 1];
-var firstLargestTransaction = possibleTrades[possibleTrades.length - 1].profit;
-
-function findSecondLargestTransaction(possibleTrades) {
-  let restOfTrades = possibleTrades.filter((obj) => obj.iMax < lastTrade.iMin);
-  let secondLargestTransaction = 0;
-  restOfTrades.forEach((obj) => {
-    if (obj.profit > secondLargestTransaction) {
-      secondLargestTransaction = obj.profit;
-    }
-  });
-  return secondLargestTransaction;
-}
-
-var secondLargestTransaction = findSecondLargestTransaction(possibleTrades);
-var output = firstLargestTransaction + secondLargestTransaction;
+module.exports =  makeArrayPossibleTrades;

@@ -1,9 +1,5 @@
-// https://leetcode.com/problems/3sum-closest/
 
-const nums = [-1, 2, 1, -4]
-const target = 1
-
-function countingThreeSumClosest (nums) {
+function countingThreeSumClosest (nums, target) {
     let lastIndex = nums.length-1
     let i = 0
     let threeSumClosestObj = {}  
@@ -15,21 +11,11 @@ function countingThreeSumClosest (nums) {
         Object.assign(threeSumClosestObj, {[key]: value });
         i++
     } while (i+2 <= lastIndex)
-    return threeSumClosestObj
-}    
 
-var threeSumClosestObj = countingThreeSumClosest (nums)
-
-function findClosestVariant (target, threeSumClosestObj) {
     let arrayOfValues = Object.values(threeSumClosestObj)
     arrayOfValues.push(target)
     arrayOfValues.sort()
-    return arrayOfValues
-}
 
-var arrayOfValues = findClosestVariant (target, threeSumClosestObj)
-
-function findFirstClosest(arrayOfValues) {
     let maxValue = Math.max(...arrayOfValues)
     let minValue = Math.min(...arrayOfValues)
     let maxDifferent = Math.abs(maxValue) + Math.abs(minValue)
@@ -47,4 +33,4 @@ function findFirstClosest(arrayOfValues) {
     }   
 }
 
-var threeSumClosest = findFirstClosest(arrayOfValues)
+module.exports =  countingThreeSumClosest;
