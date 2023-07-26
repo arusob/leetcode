@@ -1,4 +1,3 @@
-
 function makeArrayPossibleTrades(prices) {
   let tradeOne = 0;
   let minArray = [];
@@ -7,7 +6,6 @@ function makeArrayPossibleTrades(prices) {
   let maxIndexArray = [];
   let arrDiff = [];
   let objArray = [];
-
   for (let i = 0; i <= prices.length - 1; i++) {
     const getMax = prices[i];
     if (i > 0) {
@@ -32,23 +30,25 @@ function makeArrayPossibleTrades(prices) {
       }
     }
   }
-  var possibleTrades = objArray
-  if(objArray.length === 0) {
-	var lastTrade = 0;
-	return 0;
+  var possibleTrades = objArray;
+  if (objArray.length === 0) {
+    var lastTrade = 0;
+    return 0;
   } else {
-	var lastTrade = possibleTrades[possibleTrades.length - 1];
-	var firstLargestTransaction = possibleTrades[possibleTrades.length - 1].profit;
-	let restOfTrades = possibleTrades.filter((obj) => obj.iMax < lastTrade.iMin);
-	let secondLargestTransaction = 0;
-	restOfTrades.forEach((obj) => {
-	  if (obj.profit > secondLargestTransaction) {
-		secondLargestTransaction = obj.profit;
-	  }
-	});
-	output = firstLargestTransaction + secondLargestTransaction;
-	return output
+    var lastTrade = possibleTrades[possibleTrades.length - 1];
+    let firstLargestTransaction =
+      possibleTrades[possibleTrades.length - 1].profit;
+    let restOfTrades = possibleTrades.filter(
+      (obj) => obj.iMax < lastTrade.iMin
+    );
+    let secondLargestTransaction = 0;
+    restOfTrades.forEach((obj) => {
+      if (obj.profit > secondLargestTransaction) {
+        secondLargestTransaction = obj.profit;
+      }
+    });
+    output = firstLargestTransaction + secondLargestTransaction;
+    return output;
   }
 }
-
-module.exports =  makeArrayPossibleTrades;
+module.exports = makeArrayPossibleTrades;

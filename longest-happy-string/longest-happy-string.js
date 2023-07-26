@@ -1,82 +1,47 @@
-
-function makeLongestHappyString (a,b,c) {
-    var output = ''
-    var sumAbc = a + b + c
-    var arrA = []; var arrB = []; var arrC = []
-    for(let i=0; i<a; i++) {
-        arrA.push('a')
+function createLongestHappyString(a, b, c) {
+  let happyString = "";
+  const map = { a, b, c };
+  let mapSortByEntires = (map) => {
+    return Object.entries(map).sort((a, b) => b[1] - a[1]);
+  };
+  let mapSorted = Object.fromEntries(mapSortByEntires(map));
+  let mapSortedClone = { ...mapSorted };
+  for (let i = 1; i <= Object.values(mapSortedClone)[0]; i++) {
+    let firstKey = Object.keys(mapSorted)[0];
+    let firstValue = Object.values(mapSorted)[0];
+    if (
+      happyString.length === 0 ||
+      (happyString[i] !== happyString[i - 1] &&
+        happyString[i - 1] === happyString[i - 2])
+    ) {
+      Object.defineProperty(mapSorted, firstKey, {
+        value: (value = firstValue - 1),
+      });
+      happyString = happyString + firstKey + firstKey;
     }
-    for(let j=0; j<b; j++) {
-        arrB.push('b')
+    let secondKey = Object.keys(mapSorted)[1];
+    let secondValue = Object.values(mapSorted)[1];
+    if (secondValue > 0 && happyString[i] === happyString[i - 1]) {
+      Object.defineProperty(mapSorted, secondKey, {
+        value: (value = secondValue - 1),
+      });
+      happyString = happyString + secondKey;
     }
-    for(let k=0; k<c; k++) {
-        arrC.push('c')
+    let thirdKey = Object.keys(mapSorted)[2];
+    let thirdValue = Object.values(mapSorted)[2];
+    if (thirdValue > 0 && happyString[i + 1] === happyString[i]) {
+      Object.defineProperty(mapSorted, thirdKey, {
+        value: (value = thirdValue - 1),
+      });
+      happyString = happyString + thirdKey;
     }
-    if(arrA.length > arrB.length && arrA.length > arrC.length) {
-        var arrBig = arrA
-        if(arrB.length > arrC.length) {
-            var arrMid = arrB; var arrSmall = arrC
-        } else if (arrB.length < arrC.length) {
-            var arrMid = arrC; var arrSmall = arrB
-        } else if (arrB.length === arrC.length) {
-            var arrMid = [...arrB, ...arrC]; var arrSmall = []
-        }
-    } else if (arrB.length > arrA.length && arrB.length > arrC.length) {
-        var arrBig = arrB
-        if(arrA.length > arrC.length) {
-            var arrMid = arrA; var arrSmall = arrC
-        } else if (arrA.length < arrC.length) {
-            var arrMid = arrC; var arrSmall = arrA
-        } else if (arrA.length === arrC.length) {
-            var arrMid = [...arrA, ...arrC]; var arrSmall = []
-        }
-    } else if (arrC.length > arrA.length && arrC.length > arrB.length){
-        var arrBig = arrC
-        if(arrA.length > arrB.length) {
-            var arrMid = arrA; var arrSmall = arrB
-        } else if (arrA.length < arrB.length) {
-            var arrMid = arrB; var arrSmall = arrA
-        } else if (arrA.length === arrA.length) {
-            var arrMid = [...arrA, ...arrB]; var arrSmall = []
-        }
+    if (
+      secondValue === 0 &&
+      thirdValue === 0 &&
+      happyString[i - 1] === happyString[i - 2]
+    ) {
+      return happyString;
     }
-    if(arrBig.length % 2 === 0) {
-        arrBig
-    }
-    if (arrBig.length % 2 != 0 && arrBig.length > 2) {
-        arrBig.shift()
-        arrBig
-    }
-    for(let m=0; m<=(sumAbc/3); m++) {
-        if(output.charAt(output.length-1) !== arrBig[0] && arrBig.length > 0 && arrBig.length < 2){
-            output = output + arrBig[0] 
-            arrBig.shift()
-        }
-        if(output.charAt(output.length-1) !== arrBig[0] && arrBig.length >= 2){
-            output = output + arrBig[0] + arrBig[1]
-            arrBig.shift()
-            arrBig.shift()
-        }
-        if(arrMid.length > 2 && output.charAt(output.length-2) !== output.charAt(output.length-1)) {
-            output = output + arrMid[0] + arrMid[1] 
-            arrMid.shift()
-            arrMid.shift()
-        }
-        if(arrMid.length > 0 && arrMid.length <= 2 && arrSmall.length === 0) {
-            output = output + arrMid[0]
-            arrMid.shift()
-        } 
-        if(arrSmall.length > 0 && arrSmall.length < 2) {
-            output = output + arrSmall[0]
-            arrSmall.shift()
-        }
-        if (arrSmall.length >= 2) {
-            output = output + arrSmall[0] + arrSmall[1]
-            arrMid.shift()
-            arrMid.shift()
-        }
-    }
-    return output;
+  }
 }
-
-module.exports = makeLongestHappyString;
+module.exports = createLongestHappyString;

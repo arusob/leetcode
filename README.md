@@ -1,2 +1,2 @@
-# codeforces
-Solutions to tasks from the codeforces.
+# leetcode
+Solutions to tasks from the leetcode.
