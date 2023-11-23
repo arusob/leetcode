@@ -1,2 +1,2 @@
 # leetcode
-My solutions in javascaript for tasks.
+Solutions to tasks from the leetcode.
